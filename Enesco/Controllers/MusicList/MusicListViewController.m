@@ -23,6 +23,11 @@
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.navigationItem.title = @"Music List";
+    UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] init];
+    leftBarButtonItem.target = self;
+    leftBarButtonItem.action = @selector(handleAddMusic);
+    leftBarButtonItem.title = @"添加";
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     [self headerRefreshing];
 }
 
@@ -52,6 +57,16 @@
     [indicator addGestureRecognizer:tapInditator];
 }
 
+
+- (void)handleAddMusic {
+    MPMediaPickerController *mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
+    mediaPicker.delegate = self;
+    // 設定可以多選
+    mediaPicker.allowsPickingMultipleItems = YES;
+    // 開啓音樂檔案列表視窗
+    [self presentViewController:mediaPicker animated:YES completion:nil];
+}
+
 - (void)handleTapIndicator {
     MusicViewController *musicVC = [MusicViewController sharedInstance];
     if (musicVC.musicEntities.count == 0) {
@@ -68,6 +83,23 @@
     NSDictionary *musicsDict = [self dictionaryWithContentsOfJSONString:@"music_list.json"];
     self.musicEntities = [MusicEntity arrayOfEntitiesFromArray:musicsDict[@"data"]].mutableCopy;
     [self.tableView reloadData];
+    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    for (MPMediaItem* item in [everything items]) {
+        NSLog(@"itemURL : %@",item.assetURL);
+    }
+}
+
+-(void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
+{
+    // 使用者選擇了音樂後會呼叫此方法
+    [self headerRefreshing];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
+{
+    // 使用者取消選取後會呼叫此方法
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSDictionary *)dictionaryWithContentsOfJSONString:(NSString *)fileLocation {

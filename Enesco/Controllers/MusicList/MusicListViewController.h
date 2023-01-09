@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface MusicListViewController : UITableViewController
+@interface MusicListViewController : UITableViewController <MPMediaPickerControllerDelegate>
 @end

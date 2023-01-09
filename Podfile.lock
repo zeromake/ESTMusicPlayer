@@ -20,11 +20,11 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - DOUAudioStreamer (0.2.11)
+  - DOUAudioStreamer (0.2.16)
   - GVUserDefaults (1.0.1)
-  - Mantle (1.5.5):
-    - Mantle/extobjc (= 1.5.5)
-  - Mantle/extobjc (1.5.5)
+  - Mantle (1.5.8):
+    - Mantle/extobjc (= 1.5.8)
+  - Mantle/extobjc (1.5.8)
   - MBProgressHUD (0.9.1)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
@@ -32,18 +32,29 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - DOUAudioStreamer (= 0.2.11)
+  - DOUAudioStreamer (= 0.2.16)
   - GVUserDefaults
-  - Mantle (= 1.5.5)
+  - Mantle (= 1.5.8)
   - MBProgressHUD
   - SDWebImage
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - DOUAudioStreamer
+    - GVUserDefaults
+    - Mantle
+    - MBProgressHUD
+    - SDWebImage
+
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  DOUAudioStreamer: 8aefc3e80eb6c01ec89fa3c30743c660e8c55bae
+  DOUAudioStreamer: c503ba2ecb9a54ff7bda0eff66963ad224f3c7dc
   GVUserDefaults: acb40729f70984008d0650e49d7e422f1bbfa597
-  Mantle: 1b29072a707453975b200a173cf77ec1e2810b75
+  Mantle: f03b2b606c3f0cabd80214ad8a2fed6b464a7359
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 8f25aee8e4cac4d9b8b0516ba86e1268eac699ca
+
+COCOAPODS: 1.11.3

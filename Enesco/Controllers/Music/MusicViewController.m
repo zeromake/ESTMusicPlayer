@@ -71,7 +71,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     [super viewDidLoad];
     [self adapterIphone4];
     _musicDurationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateSliderValue:) userInfo:nil repeats:YES];
-    _currentIndex = 0;
+    _currentIndex = -1;
     _musicIndicator = [MusicIndicator sharedInstance];
     _originArray = @[].mutableCopy;
     _randomArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -88,8 +88,13 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     if (_dontReloadMusic && _streamer) {
         return;
     }
-    _currentIndex = 0;
-    
+    // 不能重新加载当前音乐
+    if (_specialIndex >= 0 && _currentIndex == _specialIndex) {
+        [self playingStateSwitch];
+        return;
+    }
+    _currentIndex = -1;
+
     [_originArray removeAllObjects];
     [self loadOriginArrayIfNeeded];
     
@@ -100,6 +105,14 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
     _dontReloadMusic = YES;
+}
+
+- (void)playingStateSwitch {
+    if (_musicIsPlaying) {
+        [_streamer pause];
+    } else {
+        [_streamer play];
+    }
 }
 
 - (void)loadOriginArrayIfNeeded {
@@ -177,6 +190,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 - (void)setupBackgroudImage {
     _albumImageView.layer.cornerRadius = 7;
     _albumImageView.layer.masksToBounds = YES;
+    _backgroudImageView.image = nil;
+    _albumImageView.image = nil;
     // 切换背景与封面来源
     if (_musicEntity.cover != nil && ![_musicEntity.cover isEqual: @""]) {
         // 远端地址
@@ -186,9 +201,13 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [_albumImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
     } else if (_musicEntity.artwork != nil) {
         // 媒体库
-        UIImage *artworkUIImage = [_musicEntity.artwork imageWithSize:CGSizeMake(320, 320)];
+        UIImage *artworkUIImage = [_musicEntity.artwork imageWithSize:CGSizeMake(64, 64)];
         _albumImageView.image = artworkUIImage;
         _backgroudImageView.image = artworkUIImage;
+    } else {
+        UIImage *img = [UIImage imageNamed:@"music_placeholder"];
+        _backgroudImageView.image = img;
+        _albumImageView.image = img;
     }
 
     if(![_visualEffectView isDescendantOfView:_backgroudView]) {
@@ -361,7 +380,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 
 - (void)checkCurrentIndex {
     if ([self currentIndexIsInvalid]) {
-        _currentIndex = 0;
+        _currentIndex = -1;
     }
 }
 
@@ -407,9 +426,9 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 # pragma mark - Audio Handle
 
 - (void)createStreamer {
-    if (_specialIndex > 0) {
+    if (_specialIndex >= 0) {
         _currentIndex = _specialIndex;
-        _specialIndex = 0;
+        _specialIndex = -1;
     }
     
     [self setupMusicViewWithMusicEntity:_musicEntities[_currentIndex]];

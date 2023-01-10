@@ -17,6 +17,6 @@
 @property (nonatomic, copy) NSString *artistName;
 @property (nonatomic, copy) NSString *fileName;
 @property (nonatomic, copy) NSDate   *date;
-@property MPMediaItemArtwork *artwork;
+@property (nonatomic) MPMediaItemArtwork *artwork;
 @property (nonatomic, assign) BOOL isFavorited;
 @end

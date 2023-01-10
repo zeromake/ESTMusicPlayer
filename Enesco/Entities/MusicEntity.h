@@ -7,6 +7,7 @@
 //
 
 #import "BaseEntity.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface MusicEntity : BaseEntity
 @property (nonatomic, copy) NSNumber *musicId;
@@ -15,5 +16,7 @@
 @property (nonatomic, copy) NSString *cover;
 @property (nonatomic, copy) NSString *artistName;
 @property (nonatomic, copy) NSString *fileName;
+@property (nonatomic, copy) NSDate   *date;
+@property MPMediaItemArtwork *artwork;
 @property (nonatomic, assign) BOOL isFavorited;
 @end

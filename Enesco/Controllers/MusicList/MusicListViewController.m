@@ -85,7 +85,14 @@
     [self.tableView reloadData];
     MPMediaQuery *everything = [[MPMediaQuery alloc] init];
     for (MPMediaItem* item in [everything items]) {
-        NSLog(@"itemURL : %@",item.assetURL);
+        MusicEntity *it = [[MusicEntity alloc] init];
+        it.musicId = [NSNumber numberWithLongLong:item.persistentID];
+        it.name = item.title;
+        it.musicUrl = [item.assetURL absoluteString];
+        it.artistName = item.artist;
+        it.date = item.dateAdded;
+        it.artwork = item.artwork;
+        [self.musicEntities addObject:it];
     }
 }
 

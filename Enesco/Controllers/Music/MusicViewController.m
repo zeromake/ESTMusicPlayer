@@ -177,12 +177,20 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 - (void)setupBackgroudImage {
     _albumImageView.layer.cornerRadius = 7;
     _albumImageView.layer.masksToBounds = YES;
-    
-    NSString *imageWidth = [NSString stringWithFormat:@"%.f", (SCREEN_WIDTH - 70) * 2];
-    NSURL *imageUrl = [BaseHelper qiniuImageCenter:_musicEntity.cover withWidth:imageWidth withHeight:imageWidth];
-    [_backgroudImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
-    [_albumImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
-    
+    // 切换背景与封面来源
+    if (_musicEntity.cover != nil && ![_musicEntity.cover isEqual: @""]) {
+        // 远端地址
+        NSString *imageWidth = [NSString stringWithFormat:@"%.f", (SCREEN_WIDTH - 70) * 2];
+        NSURL *imageUrl = [BaseHelper qiniuImageCenter:_musicEntity.cover withWidth:imageWidth withHeight:imageWidth];
+        [_backgroudImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
+        [_albumImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
+    } else if (_musicEntity.artwork != nil) {
+        // 媒体库
+        UIImage *artworkUIImage = [_musicEntity.artwork imageWithSize:CGSizeMake(320, 320)];
+        _albumImageView.image = artworkUIImage;
+        _backgroudImageView.image = artworkUIImage;
+    }
+
     if(![_visualEffectView isDescendantOfView:_backgroudView]) {
         UIVisualEffect *blurEffect;
         blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
@@ -409,13 +417,16 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     [MusicHandler configNowPlayingInfoCenter];
     
     Track *track = [[Track alloc] init];
-    
-    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:_musicEntity.fileName ofType: @"mp3"];
-    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
-    
-//    track.audioFileURL = [NSURL URLWithString:_musicEntity.musicUrl];
-    track.audioFileURL = fileURL;
-    
+    if (_musicEntity.fileName != nil) {
+        // 本地内置数据
+        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:_musicEntity.fileName ofType: @"mp3"];
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
+        track.audioFileURL = fileURL;
+    } else {
+        // 媒体库或者远端音乐
+        track.audioFileURL = [NSURL URLWithString:_musicEntity.musicUrl];
+    }
+
     @try {
         [self removeStreamerObserver];
     } @catch(id anException){

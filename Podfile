@@ -1,5 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
+platform :ios, '12.0'
+
+
 target 'Enesco' do
  pod 'DOUAudioStreamer', '0.2.16'
  pod 'SDWebImage', '5.14.3'

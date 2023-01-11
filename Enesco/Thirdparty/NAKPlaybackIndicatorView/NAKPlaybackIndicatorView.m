@@ -105,7 +105,7 @@
     return [self.contentView intrinsicContentSize];
 }
 
-- (UIView*)viewForBaselineLayout
+- (UIView*)viewForFirstBaselineLayout
 {
     return self.contentView;
 }

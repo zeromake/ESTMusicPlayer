@@ -19,12 +19,14 @@
 #pragma mark - Common Public Methods
 
 - (NSDictionary *)transformToDictionary {
-    return [MTLJSONAdapter JSONDictionaryFromModel:self];
+    NSError *error = nil;
+    return [MTLJSONAdapter JSONDictionaryFromModel:self error:&error];
 }
 
 + (NSArray *)transformToArray:(NSArray *)array
 {
-    return [MTLJSONAdapter JSONArrayFromModels:array];
+    NSError *error = nil;
+    return [MTLJSONAdapter JSONArrayFromModels:array error:&error];
 }
 
 + (id)entityFromDictionary:(NSDictionary *)data
@@ -56,18 +58,18 @@
 
 + (NSValueTransformer *)createdAtJSONTransformer
 {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString *str) {
+    return [MTLValueTransformer transformerUsingForwardBlock:^(NSString *str, BOOL *success, NSError **error) {
         return [self.dateFormatter dateFromString:str];
-    } reverseBlock:^(NSDate *date) {
+    } reverseBlock:^(NSDate *date, BOOL *success, NSError **error) {
         return [self.dateFormatter stringFromDate:date];
     }];
 }
 
 + (NSValueTransformer *)updatedAtJSONTransformer
 {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString *str) {
-        return [self.dateFormatter dateFromString:str];;
-    } reverseBlock:^(NSDate *date) {
+    return [MTLValueTransformer transformerUsingForwardBlock:^(NSString *str, BOOL *success, NSError **error) {
+        return [self.dateFormatter dateFromString:str];
+    } reverseBlock:^(NSDate *date, BOOL *success, NSError **error) {
         return [self.dateFormatter stringFromDate:date];
     }];
 }

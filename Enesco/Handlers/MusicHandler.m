@@ -58,7 +58,10 @@
                                       image = [UIImage new];
                                       image = placeholderImage;
                                   }
-                                  MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:image];
+                                  MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize: image.size requestHandler:^UIImage * _Nonnull(CGSize size) {
+                                    return image;
+                                  }];
+            
                                   playerAlbum.contentMode = UIViewContentModeScaleAspectFill;
                                   [dict setObject:artwork forKey:MPMediaItemPropertyArtwork];
                                   [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];

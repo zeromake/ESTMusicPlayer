@@ -1,42 +1,36 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
   - DOUAudioStreamer (0.2.16)
-  - GVUserDefaults (1.0.1)
-  - Mantle (1.5.8):
-    - Mantle/extobjc (= 1.5.8)
-  - Mantle/extobjc (1.5.8)
-  - MBProgressHUD (0.9.1)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+  - GVUserDefaults (1.0.2)
+  - Mantle (2.2.0):
+    - Mantle/extobjc (= 2.2.0)
+  - Mantle/extobjc (2.2.0)
+  - MBProgressHUD (1.2.0)
+  - SDWebImage (5.14.3):
+    - SDWebImage/Core (= 5.14.3)
+  - SDWebImage/Core (5.14.3)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
+  - AFNetworking (= 4.0.1)
   - DOUAudioStreamer (= 0.2.16)
-  - GVUserDefaults
-  - Mantle (= 1.5.8)
-  - MBProgressHUD
-  - SDWebImage
+  - GVUserDefaults (= 1.0.2)
+  - Mantle (= 2.2.0)
+  - MBProgressHUD (= 1.2.0)
+  - SDWebImage (= 5.14.3)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -48,13 +42,13 @@ SPEC REPOS:
     - SDWebImage
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   DOUAudioStreamer: c503ba2ecb9a54ff7bda0eff66963ad224f3c7dc
-  GVUserDefaults: acb40729f70984008d0650e49d7e422f1bbfa597
-  Mantle: f03b2b606c3f0cabd80214ad8a2fed6b464a7359
-  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  GVUserDefaults: 52d48cf8ba578b40a1a76312b196dfc9134ba36a
+  Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  SDWebImage: 9c36e66c8ce4620b41a7407698dda44211a96764
 
-PODFILE CHECKSUM: 8f25aee8e4cac4d9b8b0516ba86e1268eac699ca
+PODFILE CHECKSUM: 5ccf078f41a5560cedb0521e647b6db452dfeedb
 
 COCOAPODS: 1.11.3

@@ -195,8 +195,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     // 切换背景与封面来源
     if (_musicEntity.cover != nil && ![_musicEntity.cover isEqual: @""]) {
         // 远端地址
-        NSString *imageWidth = [NSString stringWithFormat:@"%.f", (SCREEN_WIDTH - 70) * 2];
-        NSURL *imageUrl = [BaseHelper qiniuImageCenter:_musicEntity.cover withWidth:imageWidth withHeight:imageWidth];
+        NSURL *imageUrl = [NSURL URLWithString:_musicEntity.cover];
         [_backgroudImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
         [_albumImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"music_placeholder"]];
     } else if (_musicEntity.artwork != nil) {
@@ -432,8 +431,11 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     }
     
     [self setupMusicViewWithMusicEntity:_musicEntities[_currentIndex]];
-    [self loadPreviousAndNextMusicImage];
-    [MusicHandler configNowPlayingInfoCenter];
+    // 下面的都废弃 setupMusicViewWithMusicEntity 已经有封面处理了
+    // 缓存封面
+    // [self loadPreviousAndNextMusicImage];
+    // 更新封面
+    // [MusicHandler configNowPlayingInfoCenter];
     
     Track *track = [[Track alloc] init];
     if (_musicEntity.fileName != nil) {
@@ -450,10 +452,10 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [self removeStreamerObserver];
     } @catch(id anException){
     }
-    
+    [self.streamer stop];
     _streamer = nil;
     _streamer = [DOUAudioStreamer streamerWithAudioFile:track];
-    
+
     [self addStreamerObserver];
     [self.streamer play];
 }
@@ -561,12 +563,12 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.userInteractionEnabled = NO;
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = hint;
-    hud.labelFont = [UIFont systemFontOfSize:15];
+    hud.label.text = hint;
+    hud.label.font = [UIFont systemFontOfSize:15];
     hud.margin = 10.f;
-    hud.yOffset = 0;
+    hud.offset = CGPointMake(0, 0);
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:2];
+    [hud hideAnimated:YES afterDelay:2];
 }
 
 # pragma mark - Public Method

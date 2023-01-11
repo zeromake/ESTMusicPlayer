@@ -194,12 +194,12 @@
      MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
      hud.userInteractionEnabled = NO;
      hud.mode = MBProgressHUDModeText;
-     hud.labelText = hint;
-     hud.labelFont = [UIFont systemFontOfSize:15];
+     hud.label.text = hint;
+     hud.label.font = [UIFont systemFontOfSize:15];
      hud.margin = 10.f;
-     hud.yOffset = 0;
+     hud.offset = CGPointMake(0, 0);
      hud.removeFromSuperViewOnHide = YES;
-     [hud hide:YES afterDelay:2];
+     [hud hideAnimated:YES afterDelay:2];
 }
 
 @end
